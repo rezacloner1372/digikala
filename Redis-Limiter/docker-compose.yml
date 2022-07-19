@@ -1,0 +1,16 @@
+version: '2'
+services:
+  redis:
+    image: 'registry.gitlab.com/qio/standard/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - app-tier
+    ports:
+      - '6379:6379'
+    restart: always
+    mem_limit: '30M'
+    mem_reservation: '30M'
+networks:
+  app-tier:
+    driver: bridge
