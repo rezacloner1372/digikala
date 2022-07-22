@@ -1,0 +1,23 @@
+version: "3"
+services:
+  web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'localhost'
+    container_name: gitlea
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:3000'
+    ports:
+      - '3000:80'
+      - '222:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab' # gitlab config file
+      - '$GITLAB_HOME/logs:/var/log/gitlab' # gitlab log file
+      - '$GITLAB_HOME/data:/var/opt/gitlab' # gitlab data file
+    networks:
+      - gitlab
+
+networks:
+  gitlab:
+    name: gitlab-network
