@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    image: 'registry.gitlab.com/qio/standard/gitea:1.16.8'
+    restart: always
+    hostname: 'localhost'
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+
+    ports:
+      - '127.0.0.1:2222:22'
+      - '127.0.0.1:3000:3000'
+    volumes:
+      - ./data:/data
+      - ./data/timezone:/etc/timezone:ro
+      - ./data/localtime:/etc/localtime:ro
