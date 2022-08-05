@@ -1,23 +1,18 @@
 version: "3"
 services:
   web:
-    image: 'gitlab/gitlab-ce:latest'
+    image: 'registry.gitlab.com/qio/standard/gitea:1.16.8'
     restart: always
     hostname: 'localhost'
-    container_name: gitlea
+    container_name: gitea
     environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://localhost:3000'
-    ports:
-      - '3000:80'
-      - '222:22'
-    volumes:
-      - '$GITLAB_HOME/config:/etc/gitlab' # gitlab config file
-      - '$GITLAB_HOME/logs:/var/log/gitlab' # gitlab log file
-      - '$GITLAB_HOME/data:/var/opt/gitlab' # gitlab data file
-    networks:
-      - gitlab
+      - USER_UID=1000
+      - USER_GID=1000
 
-networks:
-  gitlab:
-    name: gitlab-network
+    ports:
+      - '127.0.0.1:2222:22'
+      - '127.0.0.1:3000:3000'
+    volumes:
+      - ./data:/data
+      - ./data/timezone:/etc/timezone:ro
+      - ./data/localtime:/etc/localtime:ro
